@@ -1,0 +1,18 @@
+{
+  "author": "Merlyn Albery-Speyer",
+  "name": "multiplayer-chess-clock",
+  "description": "Chess clock for multiple players",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/curious-attempt-bunny/multiplayer-chess-clock.git"
+  },
+  "engines": {
+    "node": "~0.8.4"
+  },
+  "dependencies": {
+    "socket.io": "0.9.10"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {}
+}
