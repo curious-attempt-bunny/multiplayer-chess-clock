@@ -1,8 +1,13 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
   var socket = io.connect('http://localhost');
-  socket.on('news', function (data) {
-    document.write("<span>Hello: "+data.hello+"</span>");
-    socket.emit('my other event', { my: 'data' });
+  socket.on('timer', function (data) {
+    
+    document.write("<ul>");
+    for(var timer in data) {
+      document.write("<li><label>"+timer+"</label> <span>"+data[timer]+"</span></li>");
+    }
+    document.write("</ul>");
+    // socket.emit('my other event', { my: 'data' });
   });
 </script>
