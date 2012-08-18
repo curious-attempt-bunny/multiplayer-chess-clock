@@ -1,13 +1,24 @@
-<script src="/socket.io/socket.io.js"></script>
-<script>
-  var socket = io.connect('http://localhost');
-  socket.on('timer', function (data) {
-    
-    document.write("<ul>");
-    for(var timer in data) {
-      document.write("<li><label>"+timer+"</label> <span>"+data[timer]+"</span></li>");
-    }
-    document.write("</ul>");
-    // socket.emit('my other event', { my: 'data' });
-  });
-</script>
+<html>
+<head>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    $(document).ready(function() {
+      var ourNickname = 'you';
+
+      var socket = io.connect('http://localhost');
+
+      socket.on('timer', function (data) {
+        var $timer = $('#timers');
+        $timer.html('');
+        for(var timer in data) {
+          $timer.append("<li><label>"+timer+"</label> <span>"+data[timer]+"</span></li>");
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+  <ul id="timers">
+  </ul>
+</body>
