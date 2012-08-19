@@ -32,21 +32,26 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.0.4/js/bootstrap.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
+  <script src="https://raw.github.com/carhartl/jquery-cookie/master/jquery.cookie.js"></script>
   <script>
     $(document).ready(function() {
-      var ourGuid = guidGenerator();
-
-      var ourNickname = nicknameGenerator();
-
-      $('#user-identity #player-name').text(ourNickname);
-      $('#userIdentityModal #name').val(ourNickname);
+      var ourGuid = getCookie("guid", guidGenerator);
+      var ourNickname = getCookie("name", nicknameGenerator);
+      var email = getCookie("email", function() { return ''; });
 
       var base = "http://www.gravatar.com/avatar/";
-      var email = 'unknown@somplace.com';
-      var hash = MD5(email);
-      var fullUrl = base+hash +"jpg?d=mm&size=30";
 
-      $('#player-icon').attr('src', fullUrl);
+      var onUpdate = function(socket) {
+        var guid = $.cookie("guid");
+        var name = $.cookie("name");
+        var hash = MD5($.cookie("email"));
+        socket.emit("addPlayer", {guid: guid, name: name, gravatarHash: hash});
+
+        $('#user-identity #player-name').text(name);
+  
+        var fullUrl = base+hash +"jpg?d=mm&size=30";
+        $('#player-icon').attr('src', fullUrl);
+      }
 
       var socket = io.connect('http://localhost');
 
@@ -63,10 +68,19 @@
         }
       });
 
-      socket.emit("addPlayer", {guid: ourGuid, name:ourNickname, gravatarHash:hash});
+      onUpdate(socket);
 
       $('#user-identity').live('click', function() {
+        $('#userIdentityModal #name').val(getCookie("name", guidGenerator));
+        $('#userIdentityModal #email').val(getCookie("email", function() { return ''; }));
         $('#userIdentityModal').modal({});
+      });
+
+      $('#userIdentityModal .btn-primary').live('click', function() {
+        $('#userIdentityModal').modal('hide');
+        $.cookie("name", $('#userIdentityModal #name').val());
+        $.cookie("email", $('#userIdentityModal #email').val());
+        onUpdate(socket);
       });
     });
   </script>
@@ -139,6 +153,15 @@
     var adjectives = ['fluffy', 'cuddly', 'warm', 'soft', 'bouncy', 'pointy', 'furry', 'hariy'];
     var nouns = ['Penguin', 'Armadillo', 'Cat', 'Squirrel', 'Turtle', 'Bunny', 'Hedgehog', 'Canary'];
     return adjectives[Math.floor(Math.random()*adjectives.length)]+nouns[Math.floor(Math.random()*nouns.length)]+(Math.floor(30*Math.random()));
+  }
+  window.getCookie = function(key, defaultFunction) {
+    var value = $.cookie(key);
+    if (value) {
+      return value;
+    }
+    value = defaultFunction();
+    $.cookie(key, value)
+    return value;
   }
   </script>
 </body>
