@@ -18,6 +18,12 @@
     #timers li {
       list-style: none;
     }
+
+    #mainContent {
+      margin-left: auto;
+      margin-right: auto;
+      width: 380px;
+    }
   </style>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.0.4/js/bootstrap.min.js"></script>
@@ -47,6 +53,7 @@
         $timer.html('');
         for(var i=0; i<data['players'].length; i++) {  
           $timer.append("<li>"+
+            "<img src='"+base+data['players']['hash']+"jpg?d=mm&size=20'> "+
             "<span class='player-name'>"+data['players'][i]['name']+"</span>"+
             "<span class='player-time badge badge-inverse'>0:00</span>"+
             "</li>");
@@ -70,11 +77,12 @@
   </div>
   <div class="container">
     <div class="row">
-      <div class="span4">&nbsp;</div>
-      <div class="span4">
-        <ul id="timers">
+      <div class="span12">
+        <div id="mainContent">
+          <ul id="timers">
 
-        </ul>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
