@@ -52,15 +52,16 @@
         var $timer = $('#timers');
         $timer.html('');
         for(var i=0; i<data['players'].length; i++) {  
+          var player = data.players[i];
           $timer.append("<li>"+
-            "<img src='"+base+data['players']['hash']+"jpg?d=mm&size=20'> "+
-            "<span class='player-name'>"+data['players'][i]['name']+"</span>"+
+            "<img src='"+base+player.gravatarHash+"jpg?d=mm&size=20'> "+
+            "<span class='player-name'>"+player.name+"</span>"+
             "<span class='player-time badge badge-inverse'>0:00</span>"+
             "</li>");
         }
       });
 
-      socket.emit("addPlayer", {guid: ourGuid, name:ourNickname, gravarHash:hash});
+      socket.emit("addPlayer", {guid: ourGuid, name:ourNickname, gravatarHash:hash});
     });
   </script>
 </head>
