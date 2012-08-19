@@ -4,8 +4,19 @@
   <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.0.4/css/bootstrap-combined.min.css" rel="stylesheet">
   <style>
     .player-name {
-      width: 150px;
+      width: 250px;
+      font-size: 18px;
+      line-height: 27px;
       display: inline-block;
+    }
+
+    .player-time {
+      font-size: 15px;
+      line-height: 27px;
+    }
+
+    #timers li {
+      list-style: none;
     }
   </style>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
@@ -25,8 +36,8 @@
         $timer.html('');
         for(var i=0; i<data['players'].length; i++) {  
           $timer.append("<li>"+
-            "<i class='icon-user'></i> <span class='player-name'>"+data['players'][i]['name']+"</span>"+
-            "<span><span>0:00</span> <i class='icon-time'></i>"+
+            "<span class='player-name'>"+data['players'][i]['name']+"</span>"+
+            "<span class='player-time badge badge-inverse'>0:00</span>"+
             "</li>");
         }
       });
