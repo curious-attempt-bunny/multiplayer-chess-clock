@@ -2,9 +2,10 @@
 <html>
 <head>
   <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.0.4/css/bootstrap-combined.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     #timers .player-name {
-      width: 250px;
+      width: 200px;
       font-size: 18px;
       line-height: 27px;
       display: inline-block;
@@ -33,7 +34,7 @@
   <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.0.4/js/bootstrap.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://raw.github.com/carhartl/jquery-cookie/master/jquery.cookie.js"></script>
-  <script>
+  <script>    
     $(document).ready(function() {
       var ourGuid = getCookie("guid", guidGenerator);
       var ourNickname = getCookie("name", nicknameGenerator);
@@ -53,7 +54,7 @@
         $('#player-icon').attr('src', fullUrl);
       }
 
-      var socket = io.connect('http://localhost');
+      var socket = io.connect(window.location.protocol+"//"+window.location.host);
 
       socket.on('room', function (data) {
         var $timer = $('#timers');
@@ -159,9 +160,13 @@
     if (value) {
       return value;
     }
-    value = defaultFunction();
+    var value = defaultFunction();
     $.cookie(key, value)
     return value;
+  }
+  window.log = function(message) {
+    var img = new Image();
+    img.src = "/log?msg="+encodeURIComponent(message);
   }
   </script>
 </body>
