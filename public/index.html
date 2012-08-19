@@ -33,11 +33,22 @@
     #mainContent {
       margin-left: auto;
       margin-right: auto;
-      width: 380px;
+      width: 320px;
     }
 
     #user-identity {
       cursor: pointer;
+    }
+
+    #timers .active {
+      padding: 10px;
+      margin-left: -10px;
+      border: 1px solid;
+      background: #CCC;
+      /* Yes, we're not using Bootstrap here... */
+       -webkit-border-radius: 9px;
+      -moz-border-radius: 9px;
+      border-radius: 9px;     
     }
   </style>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
@@ -71,7 +82,10 @@
         $timer.html('');
         for(var i=0; i<data['players'].length; i++) {  
           var player = data.players[i];
-          $timer.append("<li>"+
+          if (i==0) {
+            player.active = true; // TODO
+          }
+          $timer.append((player.active ? "<li class='active'>" : "<li>")+
             "<img src='"+base+player.gravatarHash+"jpg?d=mm&size=120'><div class='player-detail'>"+
             "<span class='player-name'>"+player.name+"</span><br>"+
             "<span class='player-time badge badge-inverse'>0:00</span>"+
@@ -110,7 +124,7 @@
   </div>
   <div class="container">
     <div class="row">
-      <div class="span12">
+      <div class="span12" style="margin-left: none;">
         <div id="mainContent">
           <ul id="timers">
 
