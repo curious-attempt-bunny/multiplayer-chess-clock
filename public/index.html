@@ -1,24 +1,49 @@
+<!DOCTYPE html>
 <html>
 <head>
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.0.4/css/bootstrap-combined.min.css" rel="stylesheet">
+  <style>
+    .player-name {
+      width: 150px;
+      display: inline-block;
+    }
+  </style>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.0.4/js/bootstrap.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script>
     $(document).ready(function() {
-      var ourNickname = 'you';
+      var adjectives = ['fluffy', 'cuddly', 'warm', 'soft', 'bouncy', 'pointy', 'furry', 'hariy'];
+      var nouns = ['Penguin', 'Armadillo', 'Cat', 'Squirrel', 'Turtle', 'Bunny', 'Hedgehog', 'Canary'];
+      
+      var ourNickname = adjectives[Math.floor(Math.random()*adjectives.length)]+nouns[Math.floor(Math.random()*nouns.length)]+(Math.floor(30*Math.random()));
 
       var socket = io.connect('http://localhost');
 
-      socket.on('timer', function (data) {
+      socket.on('room', function (data) {
         var $timer = $('#timers');
         $timer.html('');
-        for(var timer in data) {
-          $timer.append("<li><label>"+timer+"</label> <span>"+data[timer]+"</span></li>");
+        for(var i=0; i<data['players'].length; i++) {  
+          $timer.append("<li>"+
+            "<i class='icon-user'></i> <span class='player-name'>"+data['players'][i]['name']+"</span>"+
+            "<span><span>0:00</span> <i class='icon-time'></i>"+
+            "</li>");
         }
       });
+
+      socket.emit("addPlayer", ourNickname);
     });
   </script>
 </head>
 <body>
-  <ul id="timers">
-  </ul>
+  <div class="container">
+    <div class="row">
+      <div class="span4">&nbsp;</div>
+      <div class="span4">
+        <ul id="timers">
+
+        </ul>
+      </div>
+    </div>
+  </div>
 </body>
