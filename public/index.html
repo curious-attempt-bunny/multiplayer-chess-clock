@@ -4,16 +4,26 @@
   <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.0.4/css/bootstrap-combined.min.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    #timers li {
+      margin-bottom: 15px;  
+    }
+    #timers li img {
+      display: inline-block;
+      vertical-align: top;
+      padding-right: 10px;
+    }
+    #timers .player-detail {
+      display: inline-block;
+    }
     #timers .player-name {
-      width: 200px;
-      font-size: 18px;
-      line-height: 27px;
+      font-size: 48px;
+      line-height: 60px;
       display: inline-block;
     }
 
     #timers .player-time {
-      font-size: 15px;
-      line-height: 27px;
+      font-size: 48px;
+      line-height: 60px;
     }
 
     #timers li {
@@ -62,10 +72,10 @@
         for(var i=0; i<data['players'].length; i++) {  
           var player = data.players[i];
           $timer.append("<li>"+
-            "<img src='"+base+player.gravatarHash+"jpg?d=mm&size=20'> "+
-            "<span class='player-name'>"+player.name+"</span>"+
+            "<img src='"+base+player.gravatarHash+"jpg?d=mm&size=120'><div class='player-detail'>"+
+            "<span class='player-name'>"+player.name+"</span><br>"+
             "<span class='player-time badge badge-inverse'>0:00</span>"+
-            "</li>");
+            "</div></li>");
         }
       });
 
@@ -151,9 +161,10 @@
   </script>
   <script>
   window.nicknameGenerator = function() {
-    var adjectives = ['fluffy', 'cuddly', 'warm', 'soft', 'bouncy', 'pointy', 'furry', 'hariy'];
+    // var adjectives = ['fluffy', 'cuddly', 'warm', 'soft', 'bouncy', 'pointy', 'furry', 'hariy'];
     var nouns = ['Penguin', 'Armadillo', 'Cat', 'Squirrel', 'Turtle', 'Bunny', 'Hedgehog', 'Canary'];
-    return adjectives[Math.floor(Math.random()*adjectives.length)]+nouns[Math.floor(Math.random()*nouns.length)]+(Math.floor(30*Math.random()));
+    // return adjectives[Math.floor(Math.random()*adjectives.length)]+nouns[Math.floor(Math.random()*nouns.length)]+(Math.floor(30*Math.random()));
+    return nouns[Math.floor(Math.random()*nouns.length)]+(Math.floor(30*Math.random()));
   }
   window.getCookie = function(key, defaultFunction) {
     var value = $.cookie(key);
