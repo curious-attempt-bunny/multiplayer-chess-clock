@@ -8,7 +8,7 @@
     "url": "git://github.com/curious-attempt-bunny/multiplayer-chess-clock.git"
   },
   "engines": {
-    "node": "~0.8.4"
+    "node": "0.6"
   },
   "dependencies": {
     "socket.io": "0.9.10"
