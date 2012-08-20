@@ -4,8 +4,13 @@
   <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.0.4/css/bootstrap-combined.min.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    #timers {
+      margin-left: 0px;
+    }
+
     #timers li {
       margin-bottom: 15px;  
+      margin-left: 0px;
     }
     #timers li img {
       display: inline-block;
@@ -50,6 +55,10 @@
       -moz-border-radius: 9px;
       border-radius: 9px;     
     }
+
+    #mainContent .alert {
+      display: none;
+    }
   </style>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.0.4/js/bootstrap.min.js"></script>
@@ -57,7 +66,10 @@
   <script src="https://raw.github.com/carhartl/jquery-cookie/master/jquery.cookie.js"></script>
   <script>    
     $(document).ready(function() {
-      var ourGuid = getCookie("guid", guidGenerator);
+      var ourGuid = getCookie("guid", function() {
+        $('#mainContent .alert').show();
+        return guidGenerator()
+      });
       var ourNickname = getCookie("name", nicknameGenerator);
       var email = getCookie("email", function() { return ''; });
 
@@ -82,9 +94,9 @@
         $timer.html('');
         for(var i=0; i<data['players'].length; i++) {  
           var player = data.players[i];
-          if (i==0) {
-            player.active = true; // TODO
-          }
+          // if (i==0) {
+          //   player.active = true; // TODO
+          // }
           $timer.append((player.active ? "<li class='active'>" : "<li>")+
             "<img src='"+base+player.gravatarHash+"jpg?d=mm&size=120'><div class='player-detail'>"+
             "<span class='player-name'>"+player.name+"</span><br>"+
@@ -95,17 +107,24 @@
 
       onUpdate(socket);
 
-      $('#user-identity').live('click', function() {
+      var changeName = function() {
+        $('#mainContent .alert').hide();
         $('#userIdentityModal #name').val(getCookie("name", guidGenerator));
         $('#userIdentityModal #email').val(getCookie("email", function() { return ''; }));
         $('#userIdentityModal').modal({});
-      });
+      };
+      $('#user-identity').live('click', changeName);
+      $('#change-name').live('click', changeName);
 
       $('#userIdentityModal .btn-primary').live('click', function() {
         $('#userIdentityModal').modal('hide');
         $.cookie("name", $('#userIdentityModal #name').val());
         $.cookie("email", $('#userIdentityModal #email').val());
         onUpdate(socket);
+      });
+
+      $('#mainContent .alert .close').live('click', function() {
+        $('#mainContent .alert').hide();  
       });
     });
   </script>
@@ -126,6 +145,12 @@
     <div class="row">
       <div class="span12" style="margin-left: none;">
         <div id="mainContent">
+          <div class="alert alert-info">
+            <a class="close" href="#">&times;</a>
+            <p>
+              Welcome! We've picked a fun name for you. Feel free to <a href="#" id="change-name">change it <i class="icon-wrench"></i></a> if you want.
+            </p>
+          </div>
           <ul id="timers">
 
           </ul>
@@ -176,9 +201,9 @@
   <script>
   window.nicknameGenerator = function() {
     // var adjectives = ['fluffy', 'cuddly', 'warm', 'soft', 'bouncy', 'pointy', 'furry', 'hariy'];
-    var nouns = ['Penguin', 'Armadillo', 'Cat', 'Squirrel', 'Turtle', 'Bunny', 'Hedgehog', 'Canary'];
+    var nouns = ['Bat', 'Newt', 'Dog', 'Bird', 'Cat', 'Fish', 'Frog', 'Bear', 'Toad', "Mole"];
     // return adjectives[Math.floor(Math.random()*adjectives.length)]+nouns[Math.floor(Math.random()*nouns.length)]+(Math.floor(30*Math.random()));
-    return nouns[Math.floor(Math.random()*nouns.length)]+(Math.floor(30*Math.random()));
+    return nouns[Math.floor(Math.random()*nouns.length)]+(Math.ceil(10*Math.random()));
   }
   window.getCookie = function(key, defaultFunction) {
     var value = $.cookie(key);
