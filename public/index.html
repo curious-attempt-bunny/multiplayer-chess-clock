@@ -59,6 +59,16 @@
     #mainContent .alert {
       display: none;
     }
+
+    #game-controls {
+      padding-bottom: 15px;
+    }
+    
+    #game-controls button {
+      width: 100%;
+      font-size: 32px;
+      height: 80px;
+    }
   </style>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.0.4/js/bootstrap.min.js"></script>
@@ -127,6 +137,13 @@
         $('#mainContent .alert').hide();  
         return false;
       });
+
+      var enableButton = function(id) {
+        $('#game-controls button').hide();
+        $('#game-controls #'+id).show();
+      }
+
+      enableButton('start');
     });
   </script>
 </head>
@@ -154,6 +171,12 @@
             <p>
               Welcome! We've picked a fun name for you. Feel free to <a href="#" id="change-name">change it <i class="icon-wrench"></i></a> if you want.
             </p>
+          </div>
+          <div id="game-controls">
+            <button id="start" type="button" class="btn btn-primary">Start</button>
+            <button id="pause" type="button" class="btn btn-warning">Pause</button>
+            <button id="resume" type="button" class="btn btn-warning">Resume</button>
+            <button id="next" type="button" class="btn btn-primary">Next</button>
           </div>
           <ul id="timers">
 
