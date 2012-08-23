@@ -144,6 +144,8 @@
       }
 
       enableButton('start');
+
+      $('#qrcode').attr('src', 'http://qrcode.kaywa.com/img.php?s=256&d='+window.location.href);
     });
   </script>
 </head>
@@ -181,6 +183,10 @@
           <ul id="timers">
 
           </ul>
+          <div>
+            <p/>
+            <h2>Invite others!</h2>
+            <img id="qrcode" width="256" height="256">
         </div>
       </div>
     </div>
