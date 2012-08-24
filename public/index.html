@@ -138,14 +138,40 @@
         return false;
       });
 
-      var enableButton = function(id) {
+      var enableButtons = function() {
         $('#game-controls button').hide();
-        $('#game-controls #'+id).show();
+        for(var i=0; i<arguments.length; i++) {
+          $('#game-controls #'+arguments[i]).show();
+        }
       }
 
-      enableButton('start');
+      enableButtons('start');
 
       $('#qrcode').attr('src', 'http://qrcode.kaywa.com/img.php?s=256&d='+window.location.href);
+
+      $('#game-controls #start').live('click', function() {
+        enableButtons('pause', 'next');
+        // TODO
+      });
+
+      $('#game-controls #pause').live('click', function() {
+        enableButtons('resume', 'stop');
+        // TODO
+      });
+
+      $('#game-controls #resume').live('click', function() {
+        enableButtons('pause', 'next');
+        // TODO
+      });
+
+      $('#game-controls #stop').live('click', function() {
+        enableButtons('start');
+        // TODO
+      });
+
+      $('#game-controls #next').live('click', function() {
+        // TODO
+      });
     });
   </script>
 </head>
@@ -176,9 +202,10 @@
           </div>
           <div id="game-controls">
             <button id="start" type="button" class="btn btn-primary">Start</button>
+            <button id="stop" type="button" class="btn btn-danger">Stop</button>
+            <button id="next" type="button" class="btn btn-primary">Next</button>
             <button id="pause" type="button" class="btn btn-warning">Pause</button>
             <button id="resume" type="button" class="btn btn-warning">Resume</button>
-            <button id="next" type="button" class="btn btn-primary">Next</button>
           </div>
           <ul id="timers">
 
