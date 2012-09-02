@@ -99,18 +99,20 @@
 
       var socket = io.connect(window.location.protocol+"//"+window.location.host);
 
+      var formatMillis = function(millis) {
+        var seconds = Math.floor((millis/1000) % 60)
+        return Math.floor(millis / 60000) + ":" + (seconds < 10 ? '0' : '')+seconds;
+      }
+
       socket.on('room', function (data) {
         var $timer = $('#timers');
         $timer.html('');
         for(var i=0; i<data['players'].length; i++) {  
           var player = data.players[i];
-          // if (i==0) {
-          //   player.active = true; // TODO
-          // }
-          $timer.append((player.active ? "<li class='active'>" : "<li>")+
+          $timer.append((player['active'] ? "<li class='active'>" : "<li>")+
             "<img src='"+base+player.gravatarHash+"jpg?d=mm&size=120'><div class='player-detail'>"+
             "<span class='player-name'>"+player.name+"</span><br>"+
-            "<span class='player-time badge badge-inverse'>0:00</span>"+
+            "<span class='player-time badge badge-inverse'>"+formatMillis(player.millis)+"</span>"+
             "</div></li>");
         }
       });
@@ -151,22 +153,22 @@
 
       $('#game-controls #start').live('click', function() {
         enableButtons('pause', 'next');
-        // TODO
+        socket.emit('start', ourGuid);
       });
 
       $('#game-controls #pause').live('click', function() {
         enableButtons('resume', 'stop');
-        // TODO
+        socket.emit('pause', ourGuid);
       });
 
       $('#game-controls #resume').live('click', function() {
         enableButtons('pause', 'next');
-        // TODO
+        socket.emit('resume', ourGuid);
       });
 
       $('#game-controls #stop').live('click', function() {
         enableButtons('start');
-        // TODO
+        socket.emit('stop', ourGuid);
       });
 
       $('#game-controls #next').live('click', function() {
