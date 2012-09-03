@@ -9,26 +9,32 @@
     }
 
     #timers li {
-      margin-bottom: 15px;  
+      padding-top: 10px;
+      padding-left: 10px;
+      padding-right: 10px;
+      /*margin-bottom: 15px;  */
       margin-left: 0px;
+      line-height: 48px;
     }
     #timers li img {
-      display: inline-block;
       vertical-align: top;
       padding-right: 10px;
+      width: 48px;
+      height: 48px;
     }
-    #timers .player-detail {
+    /*#timers .player-detail {
       display: inline-block;
-    }
+    }*/
     #timers .player-name {
-      font-size: 48px;
-      line-height: 60px;
-      display: inline-block;
+      font-size: 32px;
     }
 
     #timers .player-time {
-      font-size: 48px;
-      line-height: 60px;
+      margin-left: 20px;
+      font-size: 32px;
+    }
+    #timers .time-box {
+      float: right;
     }
 
     #timers li {
@@ -46,8 +52,6 @@
     }
 
     #timers .active {
-      padding: 10px;
-      margin-left: -10px;
       border: 1px solid;
       background: #CCC;
       /* Yes, we're not using Bootstrap here... */
@@ -115,10 +119,10 @@
             weAreActive = true;
           }
           $timer.append((player['active'] ? "<li class='active'>" : "<li>")+
-            "<img src='"+base+player.gravatarHash+"jpg?d=mm&size=120'><div class='player-detail'>"+
-            "<span class='player-name'>"+player.name+"</span><br>"+
-            "<span class='player-time badge badge-inverse'>"+formatMillis(player.millis)+"</span>"+
-            "</div></li>");
+            "<img src='"+base+player.gravatarHash+"jpg?d=mm&size=120'>"+
+            "<span class='player-name'>"+player.name+"</span>"+
+            "<div class='time-box'><span class='player-time badge badge-inverse'>"+formatMillis(player.millis)+"</span></div>"+
+            "</li>");
         }
         if (data.state == 'ready') {
           enableButtons('start');
