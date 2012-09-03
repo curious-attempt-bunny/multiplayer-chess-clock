@@ -115,6 +115,11 @@
             "<span class='player-time badge badge-inverse'>"+formatMillis(player.millis)+"</span>"+
             "</div></li>");
         }
+        if (data.state == 'ready') {
+          enableButtons('start');
+        } else {
+          enableButtons('next', 'pause');
+        }
       });
 
       onUpdate(socket);
@@ -147,32 +152,32 @@
         }
       }
 
-      enableButtons('start');
+      // enableButtons('start');
 
       $('#qrcode').attr('src', 'http://qrcode.kaywa.com/img.php?s=256&d='+window.location.href);
 
       $('#game-controls #start').live('click', function() {
-        enableButtons('pause', 'next');
+        // enableButtons('pause', 'next');
         socket.emit('start', ourGuid);
       });
 
       $('#game-controls #pause').live('click', function() {
-        enableButtons('resume', 'stop');
+        // enableButtons('resume', 'stop');
         socket.emit('pause', ourGuid);
       });
 
       $('#game-controls #resume').live('click', function() {
-        enableButtons('pause', 'next');
+        // enableButtons('pause', 'next');
         socket.emit('resume', ourGuid);
       });
 
       $('#game-controls #stop').live('click', function() {
-        enableButtons('start');
+        // enableButtons('start');
         socket.emit('stop', ourGuid);
       });
 
       $('#game-controls #next').live('click', function() {
-        // TODO
+        socket.emit('next', ourGuid);
       });
     });
   </script>
