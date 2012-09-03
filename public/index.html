@@ -74,6 +74,10 @@
       height: 80px;
       display: none;
     }
+
+    #invite {
+      display: none;
+    }
   </style>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.0.4/js/bootstrap.min.js"></script>
@@ -126,6 +130,9 @@
         }
         if (data.state == 'ready') {
           enableButtons('start');
+          $('#invite').show();
+        } else if (data.state == 'paused') {
+          enableButtons('resume', 'stop');
         } else if (weAreActive) {
           enableButtons('next');
         } else {
@@ -220,15 +227,15 @@
           </div>
           <div id="game-controls">
             <button id="start" type="button" class="btn btn-primary">Start</button>
-            <button id="stop" type="button" class="btn btn-danger">Stop</button>
             <button id="next" type="button" class="btn btn-primary">Next</button>
             <button id="pause" type="button" class="btn btn-warning">Pause</button>
             <button id="resume" type="button" class="btn btn-warning">Resume</button>
+            <!-- <button id="stop" type="button" class="btn btn-danger">Stop</button> -->
           </div>
           <ul id="timers">
 
           </ul>
-          <div>
+          <div id='invite'>
             <p/>
             <h2>Invite others!</h2>
             <img id="qrcode" width="256" height="256">
