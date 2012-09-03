@@ -106,7 +106,8 @@
         $('#player-icon').attr('src', fullUrl);
       }
 
-      var socket = io.connect(window.location.protocol+"//"+window.location.host);
+      var url = window.location.protocol+"//"+window.location.host;
+      var socket = io.connect(url);
 
       var formatMillis = function(millis) {
         var seconds = Math.floor((millis/1000) % 60)
@@ -141,6 +142,7 @@
       });
 
       onUpdate(socket);
+      $('#email-invite').attr('href', 'mailto:?subject=Our game at '+url);
 
       var changeName = function() {
         $('#mainContent .alert').hide();
@@ -238,6 +240,7 @@
           <div id='invite'>
             <p/>
             <h2>Invite others!</h2>
+            <a id="email-invite">By email</a><br>
             <img id="qrcode" width="256" height="256">
         </div>
       </div>
