@@ -68,6 +68,7 @@
       width: 100%;
       font-size: 32px;
       height: 80px;
+      display: none;
     }
   </style>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
@@ -105,10 +106,14 @@
       }
 
       socket.on('room', function (data) {
+        var weAreActive = false;
         var $timer = $('#timers');
         $timer.html('');
         for(var i=0; i<data['players'].length; i++) {  
           var player = data.players[i];
+          if (player.guid == ourGuid && player.active) {
+            weAreActive = true;
+          }
           $timer.append((player['active'] ? "<li class='active'>" : "<li>")+
             "<img src='"+base+player.gravatarHash+"jpg?d=mm&size=120'><div class='player-detail'>"+
             "<span class='player-name'>"+player.name+"</span><br>"+
@@ -117,8 +122,10 @@
         }
         if (data.state == 'ready') {
           enableButtons('start');
+        } else if (weAreActive) {
+          enableButtons('next');
         } else {
-          enableButtons('next', 'pause');
+          enableButtons('pause');
         }
       });
 
