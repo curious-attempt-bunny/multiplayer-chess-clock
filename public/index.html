@@ -98,7 +98,7 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.0.4/js/bootstrap.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
-  <script src="https://raw.github.com/carhartl/jquery-cookie/master/jquery.cookie.js"></script>
+  <script src="jquery.cookie.js"></script>
   <script>    
     $(document).ready(function() {
       var ourGuid = getCookie("guid", function() {
@@ -135,7 +135,7 @@
         }
       };
       $('#avatar').attr('src', defaultAvatar);
-      $('#handle').live('keyup', showAvatar);
+      $('body').on('keyup', '#handle', showAvatar);
       $('#avatar').load(function() {
         $('#avatar').show();
         $('#loading').hide();
@@ -186,17 +186,17 @@
         $('#userIdentityModal').modal({});
         showAvatar();
       };
-      $('#user-identity').live('click', changeName);
-      $('#change-name').live('click', changeName);
+      $('body').on('click', '#user-identity', changeName);
+      $('body').on('click', '#change-name', changeName);
 
-      $('#userIdentityModal .btn-primary').live('click', function() {
+      $('body').on('click', '#userIdentityModal .btn-primary', function() {
         $('#userIdentityModal').modal('hide');
         $.cookie("name", $('#userIdentityModal #name').val());
         $.cookie("handle", $('#userIdentityModal #handle').val());
         onUpdate(socket);
       });
 
-      $('#mainContent .alert .close').live('click', function() {
+      $('body').on('click', '#mainContent .alert .close', function() {
         $('#mainContent .alert').hide();  
         return false;
       });
@@ -212,27 +212,27 @@
 
       $('#qrcode').attr('src', 'http://qrcode.kaywa.com/img.php?s=256&d='+window.location.href);
 
-      $('#game-controls #start').live('click', function() {
+      $('body').on('click', '#game-controls #start', function() {
         // enableButtons('pause', 'next');
         socket.emit('start', ourGuid);
       });
 
-      $('#game-controls #pause').live('click', function() {
+      $('body').on('click', '#game-controls #pause', function() {
         // enableButtons('resume', 'stop');
         socket.emit('pause', ourGuid);
       });
 
-      $('#game-controls #resume').live('click', function() {
+      $('body').on('click', '#game-controls #resume', function() {
         // enableButtons('pause', 'next');
         socket.emit('resume', ourGuid);
       });
 
-      $('#game-controls #stop').live('click', function() {
+      $('body').on('click', '#game-controls #stop', function() {
         // enableButtons('start');
         socket.emit('stop', ourGuid);
       });
 
-      $('#game-controls #next').live('click', function() {
+      $('body').live('click', '#game-controls #next', function() {
         socket.emit('next', ourGuid);
       });
     });
